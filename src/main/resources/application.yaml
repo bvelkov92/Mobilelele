@@ -1,0 +1,40 @@
+    spring:
+      application:
+        name: mobilele
+
+        spring:
+          sql:
+            init:
+              mode: always # Задължително за MySQL
+          jpa:
+            defer-datasource-initialization: true # Изчаква Hibernate да направи таблиците
+            hibernate:
+              ddl-auto: update
+
+      jpa:
+#        properties:
+#          hibernate:
+#            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#            format_sql: 'FALSE'
+        hibernate:
+          ddl-auto: update
+        open-in-view: 'false'
+      mvc:
+        hidden-method:
+          filter:
+            enabled: 'true'
+      datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        username: root
+        password: 12345
+        url: jdbc:mysql://localhost:3306/mobilele?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    logging:
+      level:
+        org:
+          hibernate:
+            type:
+              descriptor: TRACE
+            SQL: DEBUG
+          nodeValue: WARN
+        blog: WARN
+
