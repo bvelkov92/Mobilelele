@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/fragments/head}">
 </head>
@@ -9,7 +9,6 @@
 <div>
     <nav th:replace="~{fragments/navbar}"></nav>
 </div>
-
 
 <div class="container-fluid">
     <h2 class="text-center text-white mt-5">Details</h2>
@@ -22,18 +21,18 @@
             </div>
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
-                    <div class="card-text"><span>• Mileage</span></div>
-                    <div class="card-text"><span>• Price</span></div>
-                    <div class="card-text"><span>• Engine type</span></div>
-                    <div class="card-text"><span>• Transmission type</span></div>
-                    <div class="card-text"><span>• Offer created</span></div>
-                    <div class="card-text"><span>• Offer modified</span></div>
-                    <div class="card-text"><span>• Seller - First and Last name</span></div>
+                    <div class="card-text"><span th:text ="${offer.mileage}"></span></div>
+                    <div class="card-text"><span th:text ="${offer.price}"></span></div>
+                    <div class="card-text"><span th:text = "${offer.engineType}"></span></div>
+                    <div class="card-text"><span th:text = "${offer.transmissionType}"></span></div>
+                    <div class="card-text"><span th:text = "${offer.offerCreated}"></span></div>
+                    <div class="card-text"><span th:text = "${offer.offerModified}"></span></div>
+<!--                    <div class="card-text"><span>• Seller - First and Last name</span></div>-->
                 </li>
             </ul>
             <div class="card-body">
-                <a class="card-link" href="/">Update</a>
-                <a class="card-link" href="/">Delete</a>
+                <a class="card-link" th:href="@{/offers/{id}/update(id=${offer.id})}">Update</a>
+                <a class="card-link" th:href="@{/offers/all}">Delete</a>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">

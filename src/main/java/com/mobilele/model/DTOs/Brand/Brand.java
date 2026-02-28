@@ -1,6 +1,6 @@
-package com.mobilele.model.DTOs;
+package com.mobilele.model.DTOs.Brand;
 
-import com.mobilele.model.entity.Model;
+import com.mobilele.model.DTOs.Model.Model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +12,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandDto {
+public class Brand {
 
     private String brand;
-    private List<ModelDTO>  vehicleModelsAboutThisBrand;
+    private List<Model>  models;
 
 }

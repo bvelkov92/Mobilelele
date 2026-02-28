@@ -1,4 +1,4 @@
-package com.mobilele.model.DTOs;
+package com.mobilele.model.DTOs.Offer;
 
 import com.mobilele.model.enums.EngineTypeEnum;
 import com.mobilele.model.enums.TypeOfVehicleEnums;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddOfferDto {
+public class SaveOffer {
 
     @Positive
     @NotNull

@@ -1,6 +1,6 @@
 package com.mobilele.controllers.UserControllers;
 
-import com.mobilele.model.DTOs.UserLoginDTO;
+import com.mobilele.model.DTOs.User.UserLogin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ public class UserLoginController {
     //======================= L O G I N =============================ø
     @GetMapping("/login")
     public String getLogin(Model model) {
-
         if (!model.containsAttribute("userLoginDto")) {
-            model.addAttribute("userLoginDto", new UserLoginDTO());
+            model.addAttribute("userLoginDto", new UserLogin());
         }
+
         return "auth-login";
     }
 }

@@ -1,13 +1,10 @@
 package com.mobilele.service.Impl;
 
-import com.mobilele.model.entity.User;
+import com.mobilele.model.entity.Users;
 import com.mobilele.repository.UserRepository;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class MobileleUserDetailsService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException("User " + email +" not found!"));
     }
 
-    private UserDetails map(User user){
+    private UserDetails map(Users user){
       return   org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())

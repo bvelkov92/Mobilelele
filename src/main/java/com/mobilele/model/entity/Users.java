@@ -9,44 +9,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class Users extends BaseEntity {
 
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private String password;
-
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
+    private String password;
+
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
-
-    @Column
-    private boolean isActive;
 
     @Column
     private String imageUrl;
 
-    @Column
-    private Date created;
-
-    @Column
-    private Date modified;
-
     @ManyToOne
-    private Role role;
+    private Roles role;
 
 }

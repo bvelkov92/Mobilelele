@@ -3,19 +3,17 @@ package com.mobilele.model.entity;
 import com.mobilele.model.enums.EngineTypeEnum;
 import com.mobilele.model.enums.TransmissionTypeEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "offer")
 @Getter
 @Setter
-public class Offer extends BaseEntity{
+@NoArgsConstructor
+public class Offers extends BaseEntity{
 
     @Column(nullable = false)
     @NotNull
@@ -31,11 +29,11 @@ public class Offer extends BaseEntity{
 
     @Column(nullable = false)
     @NotNull
-    private int miliage;
+    private int mileage;
 
     @Column(nullable = false)
     @NotNull
-    @Min(0)
+    @Positive
     private double price;
 
     @Column(nullable = false)
@@ -43,20 +41,14 @@ public class Offer extends BaseEntity{
     private TransmissionTypeEnum transmission;
 
     @Column(nullable = false)
-    @Min(0)
+    @Positive
     @NotNull
     private int year;
 
-    @Column
-    private Date createdDate;
-
-    @Column
-    private Date modifiedDate;
-
-    @OneToOne
-    private Model model;
+    @ManyToOne
+    private Models model;
 
     @ManyToOne
-    private User seller;
+    private Users seller;
 
 }

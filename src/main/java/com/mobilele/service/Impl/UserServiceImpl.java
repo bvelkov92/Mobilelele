@@ -1,8 +1,7 @@
 package com.mobilele.service.Impl;
 
-import com.mobilele.model.DTOs.UserLoginDTO;
-import com.mobilele.model.DTOs.UserRegisterDto;
-import com.mobilele.model.entity.User;
+import com.mobilele.model.DTOs.User.UserRegister;
+import com.mobilele.model.entity.Users;
 import com.mobilele.repository.RoleRepository;
 import com.mobilele.repository.UserRepository;
 import com.mobilele.service.UserService;
@@ -32,13 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void userRegister(UserRegisterDto userRegisterDto){
-        User newUser = new User();
+    public void userRegister(UserRegister userRegisterDto){
+        Users newUser = new Users();
         newUser.setUsername(userRegisterDto.getUsername());
         newUser.setEmail(userRegisterDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
 // TODO: ADD ROLES CONDITION
-        this.userRepository.saveAndFlush(this.modelMapper.map(newUser, User.class));
+        this.userRepository.saveAndFlush(this.modelMapper.map(newUser, Users.class));
     }
 
 }

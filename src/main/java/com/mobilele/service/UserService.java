@@ -1,10 +1,8 @@
 package com.mobilele.service;
 
-import com.mobilele.model.DTOs.UserRegisterDto;
-
-
+import com.mobilele.model.DTOs.User.UserRegister;
 
 public interface UserService {
 
-    void userRegister(UserRegisterDto userRegisterDto);
+    void userRegister(UserRegister userRegisterDto);
 }

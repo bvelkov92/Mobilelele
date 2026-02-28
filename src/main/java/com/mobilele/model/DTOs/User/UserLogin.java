@@ -1,4 +1,4 @@
-package com.mobilele.model.DTOs;
+package com.mobilele.model.DTOs.User;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLoginDTO {
+public class UserLogin {
 
     @NotEmpty
     private String email;

@@ -1,6 +1,6 @@
 package com.mobilele.controllers.UserControllers;
 
-import com.mobilele.model.DTOs.UserRegisterDto;
+import com.mobilele.model.DTOs.User.UserRegister;
 import com.mobilele.service.Impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -26,14 +26,14 @@ public class UserRegistrationController {
     public String GetUserRegister (Model model){
 
         if (!model.containsAttribute("userRegisterDto")) {
-            model.addAttribute("userRegisterDto", new UserRegisterDto());
+            model.addAttribute("userRegisterDto", new UserRegister());
         }
 
         return "register";
     }
 
     @PostMapping("/register")
-    public String postUserRegister(@Valid UserRegisterDto userRegisterDto,
+    public String postUserRegister(@Valid UserRegister userRegisterDto,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes){
 

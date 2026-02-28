@@ -1,4 +1,4 @@
-package com.mobilele.model.DTOs;
+package com.mobilele.model.DTOs.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegisterDto {
+public class UserRegister {
 
    @NotNull
    @Size(min = 6)

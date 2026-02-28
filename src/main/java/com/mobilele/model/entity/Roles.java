@@ -12,12 +12,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Role extends BaseEntity {
+public class Roles extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private RoleEnums roleName;
 
-    public Role(RoleEnums roleName) {
+    public Roles(RoleEnums roleName) {
         this.roleName = roleName;
     }
 }

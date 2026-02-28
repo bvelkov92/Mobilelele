@@ -1,6 +1,9 @@
 package com.mobilele.controllers.BrandContollers;
 
+import com.mobilele.service.BrandService;
+import com.mobilele.service.Impl.BrandServiceImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,9 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/brands")
 public class BrandsController {
 
-    @GetMapping("/all")
-    public String getAllBrands(){
+    private final BrandService brandService;
 
+    public BrandsController(BrandService brandService) {
+        this.brandService = brandService;
+    }
+
+
+    @GetMapping("/all")
+    public String getAllBrands(Model model){
+        model.addAttribute("allBrands", brandService.getAllBrands());
         return "brands";
     }
 }

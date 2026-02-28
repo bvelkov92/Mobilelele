@@ -1,6 +1,6 @@
 package com.mobilele.service.Impl;
 
-import com.mobilele.model.entity.Role;
+import com.mobilele.model.entity.Roles;
 import com.mobilele.model.enums.RoleEnums;
 import com.mobilele.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -19,11 +19,11 @@ public class RoleServiceImpl implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (roleRepository.count() == 0) {
             // Добавяме ADMIN
-            Role admin = new Role();
+            Roles admin = new Roles();
             admin.setRoleName(RoleEnums.ADMIN);
             roleRepository.save(admin);
 
-            Role user = new Role();
+            Roles user = new Roles();
             user.setRoleName(RoleEnums.USER);
             roleRepository.save(user);
 
