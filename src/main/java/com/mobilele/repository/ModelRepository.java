@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface ModelRepository extends JpaRepository <Models, Long > {
 
-    List<Models> findByBrand(Brands brand);
     List<Models> findAllByBrand_Id(Long id);
 
 }

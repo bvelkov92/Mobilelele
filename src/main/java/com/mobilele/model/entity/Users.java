@@ -1,5 +1,6 @@
 package com.mobilele.model.entity;
 
+import com.mobilele.model.enums.RoleEnums;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -35,7 +36,7 @@ public class Users extends BaseEntity {
     @Column
     private String imageUrl;
 
-    @ManyToOne
+    @ManyToOne()
     private Roles role;
 
 }

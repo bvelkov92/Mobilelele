@@ -1,7 +1,6 @@
 package com.mobilele.controllers.BrandContollers;
 
 import com.mobilele.service.BrandService;
-import com.mobilele.service.Impl.BrandServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

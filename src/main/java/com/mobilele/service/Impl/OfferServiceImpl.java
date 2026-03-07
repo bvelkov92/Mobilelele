@@ -12,7 +12,6 @@ import com.mobilele.service.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +85,14 @@ public class OfferServiceImpl implements OfferService {
     public UpdateOffer getUpdateDtoDetails(Long id) {
         Offers offer = this.offerRepository.findById(id).orElseThrow();
         return modelMapper.map(offer, UpdateOffer.class);
+    }
+
+    @Override
+    public void deleteOffer(Long id) {
+        Optional<Offers> byId = this.offerRepository.findById(id);
+
+        System.out.printf("Test");
+
+        this.offerRepository.deleteById(id);
     }
 }

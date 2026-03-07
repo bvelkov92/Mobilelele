@@ -1,7 +1,6 @@
 package com.mobilele.controllers.OfferControllers;
 
 import com.mobilele.model.DTOs.Offer.SaveOffer;
-import com.mobilele.model.DTOs.Offer.CurrentOfferDetails;
 import com.mobilele.model.DTOs.Offer.UpdateOffer;
 import com.mobilele.model.enums.EngineTypeEnum;
 import com.mobilele.model.enums.TypeOfVehicleEnums;
@@ -14,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/offers")
@@ -106,10 +103,14 @@ public class OffersController {
         }
 
         this.offerService.updateOffer(updateOffer, id);
-
-        System.out.printf("TODO: ");
-
         return "redirect:/offers/" + id + "/details";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteOffer(@PathVariable Long id){
+        this.offerService.deleteOffer(id);
+
+        return "redirect:/offers/all";
     }
 
 

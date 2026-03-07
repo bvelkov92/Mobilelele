@@ -21,6 +21,8 @@ public class UserRegister {
    @Email
    private String email;
 
+
+   //TODO: Validation of passwords.
    @Size(min = 6, max = 12)
    @NotNull
    private String password;

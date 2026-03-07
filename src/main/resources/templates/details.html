@@ -32,7 +32,7 @@
             </ul>
             <div class="card-body">
                 <a class="card-link" th:href="@{/offers/{id}/update(id=${offer.id})}">Update</a>
-                <a class="card-link" th:href="@{/offers/all}">Delete</a>
+                <a class="card-link" th:href="@{/offers/{id}/delete(id=${offer.id})}">Delete</a>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
