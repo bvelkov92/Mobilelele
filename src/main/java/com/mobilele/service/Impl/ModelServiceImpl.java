@@ -1,7 +1,9 @@
 package com.mobilele.service.Impl;
 
 import com.mobilele.repository.ModelRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ModelServiceImpl {
 
     private final ModelRepository modelRepository;

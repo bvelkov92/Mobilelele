@@ -5,15 +5,11 @@ import com.mobilele.model.entity.Users;
 import com.mobilele.repository.UserRepository;
 import com.mobilele.service.RoleService;
 import com.mobilele.service.UserService;
-import lombok.Getter;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
-@Setter
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

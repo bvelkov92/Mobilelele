@@ -6,8 +6,6 @@ import com.mobilele.model.DTOs.Model.Model;
 import com.mobilele.repository.BrandRepository;
 import com.mobilele.repository.ModelRepository;
 import com.mobilele.service.BrandService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -15,8 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Getter
-@Setter
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;

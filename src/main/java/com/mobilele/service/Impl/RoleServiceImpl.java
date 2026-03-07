@@ -6,9 +6,9 @@ import com.mobilele.repository.RoleRepository;
 import com.mobilele.repository.UserRepository;
 import com.mobilele.service.RoleService;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
