@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class OfferServiceImpl implements OfferService {
 
@@ -49,7 +51,19 @@ public class OfferServiceImpl implements OfferService {
     public List<GetAllOffers> getAllOffers() {
 
         return this.offerRepository.findAll().stream()
-                .map(offer -> modelMapper.map(offer, GetAllOffers.class)).toList();
+                .map(offer -> {
+                    GetAllOffers dto = new GetAllOffers();
+                    dto.setMileage(offer.getMileage());
+                    dto.setPrice(offer.getPrice());
+                    dto.setImageUrl(offer.getImageUrl());
+                    dto.setYear(offer.getYear());
+                    dto.setEngine(offer.getEngine());
+                    dto.setTransmission(offer.getTransmission());
+                    dto.setBrand(offer.getModel().getBrand().getName());
+                    dto.setModel(offer.getModel().getName());
+                    dto.setId(offer.getId());
+                    return dto;
+                }).toList();
     }
 
     @Override
