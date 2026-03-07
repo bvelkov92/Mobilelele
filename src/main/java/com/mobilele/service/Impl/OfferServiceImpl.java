@@ -35,8 +35,7 @@ public class OfferServiceImpl implements OfferService {
     }
     public Users getLoggedUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-         Users user = this.userRepository.findUserByEmail(authentication.getName()).orElse(null);
-        return user;
+        return this.userRepository.findUserByEmail(authentication.getName()).orElse(null);
     }
 
     @Override
