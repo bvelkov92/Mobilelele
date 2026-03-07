@@ -2,11 +2,11 @@ package com.mobilele.service.Impl;
 
 import com.mobilele.model.entity.Users;
 import com.mobilele.repository.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.List;
 
 public class MobileleUserDetailsService implements UserDetailsService {
 
@@ -28,7 +28,7 @@ public class MobileleUserDetailsService implements UserDetailsService {
       return   org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
-                .authorities(List.of())
+                .authorities(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName()))
                 .build();
     }
 

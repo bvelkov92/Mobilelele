@@ -6,10 +6,14 @@ import com.mobilele.model.DTOs.Offer.GetAllOffers;
 import com.mobilele.model.DTOs.Offer.UpdateOffer;
 import com.mobilele.model.entity.Models;
 import com.mobilele.model.entity.Offers;
+import com.mobilele.model.entity.Users;
 import com.mobilele.repository.ModelRepository;
 import com.mobilele.repository.OfferRepository;
+import com.mobilele.repository.UserRepository;
 import com.mobilele.service.OfferService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,19 +24,26 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
 
-    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, ModelMapper modelMapper) {
+    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.modelRepository = modelRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
-
+    public Users getLoggedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         Users user = this.userRepository.findUserByEmail(authentication.getName()).orElse(null);
+        return user;
+    }
 
     @Override
     public void saveOffer(SaveOffer saveOffer) {
         Offers offer = new Offers();
         Models model = this.modelRepository.findById(saveOffer.getModelId()).get();
+
         offer.setDescription(saveOffer.getDescription());
         offer.setPrice(saveOffer.getPrice());
         offer.setEngine(saveOffer.getEngine());
@@ -41,6 +52,12 @@ public class OfferServiceImpl implements OfferService {
         offer.setTransmission(saveOffer.getTransmissionType());
         offer.setYear(saveOffer.getYear());
         offer.setImageUrl(saveOffer.getImageUrl());
+        if (getLoggedUser()!=null){
+            Users user = getLoggedUser();
+        offer.setSeller(user);
+        }else {
+            throw new NullPointerException("Not logged user!");
+        }
 
         this.offerRepository.saveAndFlush(offer);
 
@@ -68,7 +85,11 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public CurrentOfferDetails getDetails(Long id) {
         Offers offer = this.offerRepository.findById(id).orElse(null);
-            return this.modelMapper.map(offer, CurrentOfferDetails.class);
+        String user = offer.getSeller().getUsername();
+        CurrentOfferDetails mappedOffer = this.modelMapper.map(offer, CurrentOfferDetails.class);
+        mappedOffer.setUser(user);
+
+        return mappedOffer;
     }
 
     @Override

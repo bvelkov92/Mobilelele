@@ -36,5 +36,8 @@ public class CurrentOfferDetails {
     @NotNull
     private Long modelId;
 
+    @NotNull
+    private String user;
 
+    private String imageUrl;
 }

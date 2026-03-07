@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{/fragments/head}">
 </head>
@@ -21,22 +22,25 @@
             </div>
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
-                    <div class="card-text"><span th:text ="${offer.mileage}"></span></div>
-                    <div class="card-text"><span th:text ="${offer.price}"></span></div>
-                    <div class="card-text"><span th:text = "${offer.engineType}"></span></div>
-                    <div class="card-text"><span th:text = "${offer.transmissionType}"></span></div>
-                    <div class="card-text"><span th:text = "${offer.offerCreated}"></span></div>
+                    <div class="card-text">Mileage: <span th:text ="${offer.mileage}"></span></div>
+                    <div class="card-text">Price: <span th:text ="${offer.price}"></span></div>
+                    <div class="card-text">Engine: <span th:text = "${offer.engineType}"></span></div>
+                    <div class="card-text">Transmission:  <span th:text = "${offer.transmissionType}"></span></div>
+                    <div class="card-text"> <span th:text = "${offer.offerCreated}"></span></div>
                     <div class="card-text"><span th:text = "${offer.offerModified}"></span></div>
-<!--                    <div class="card-text"><span>• Seller - First and Last name</span></div>-->
+                    <div class="card-text">Created by; <span th:text ="${offer.user}"></span></div>
                 </li>
             </ul>
-            <div class="card-body">
-                <a class="card-link" th:href="@{/offers/{id}/update(id=${offer.id})}">Update</a>
-                <a class="card-link" th:href="@{/offers/{id}/delete(id=${offer.id})}">Delete</a>
+            <div class="card-body"
+                 sec:authorize="hasRole('ADMIN')">
+                <a class="card-link "
+                   th:href="@{/offers/{id}/update(id=${offer.id})}">Update</a>
+                <a class="card-link"
+                   th:href="@{/offers/{id}/delete(id=${offer.id})}">Delete</a>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-            <img src="/" class="card-img-top"  alt="Car image">
+            <img th:src="${offer.imageUrl}" class="card-img-top"  alt="Car image">
         </div>
     </div>
 </div>

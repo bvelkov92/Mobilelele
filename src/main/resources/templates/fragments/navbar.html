@@ -27,7 +27,7 @@
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/offers/all}">All Offers</a>
                 </li>
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link dropdown-toggle" th:href="@{/}" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
@@ -35,7 +35,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 <!--                        TODO: To add links;-->
-                        <a class="dropdown-item" th:href="@{/}">Action</a>
+                        <a class="dropdown-item"  th:href="@{/}">Action</a>
                         <a class="dropdown-item" th:href="@{/}">Another action</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/}">Something else here</a>
