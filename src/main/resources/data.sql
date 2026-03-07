@@ -1,14 +1,14 @@
-INSERT INTO brands (name,start_year,end_year)
+INSERT INTO brands (name)
 VALUES
-    ('Toyota', 1930, 2025),
-    ('Ford', 1932, 2018),
-    ('MAN', 1970, 2024);
+    ('Toyota'),
+    ('Ford'),
+    ('MAN');
 
 
-INSERT INTO models (brands_id,category_vehicle, name)
+INSERT INTO models (brands_id,category_vehicle, name, start_year, end_year)
 VALUES
-    (1,'CAR', 'Camry'),
-    (1,'CAR','Corolla'),
-    (2,'CAR','Focus'),
-    (2,'CAR','Fiesta'),
-    (3,'TRUCK','Forester');
+    (1,'CAR', 'Camry',1989, 2026),
+    (1,'CAR','Corolla',1976, 2025),
+    (2,'CAR','Focus', 1972, 2024),
+    (2,'CAR','Fiesta', 1989, 2026),
+    (3,'TRUCK','TGX', 1970, 2024);

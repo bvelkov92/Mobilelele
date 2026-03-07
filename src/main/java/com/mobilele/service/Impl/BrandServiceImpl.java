@@ -1,11 +1,12 @@
 package com.mobilele.service.Impl;
 
 import com.mobilele.model.DTOs.Brand.Brand;
-import com.mobilele.model.DTOs.Brand.GetAllBrands;
 import com.mobilele.model.DTOs.Model.Model;
+import com.mobilele.model.entity.Brands;
 import com.mobilele.repository.BrandRepository;
 import com.mobilele.repository.ModelRepository;
 import com.mobilele.service.BrandService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -17,10 +18,12 @@ public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
     private final ModelRepository modelRepository;
+    private final ModelMapper modelMapper;
 
-    public BrandServiceImpl(BrandRepository brandRepository, ModelRepository modelRepository) {
+    public BrandServiceImpl(BrandRepository brandRepository, ModelRepository modelRepository, ModelMapper modelMapper) {
         this.brandRepository = brandRepository;
         this.modelRepository = modelRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -29,31 +32,21 @@ public class BrandServiceImpl implements BrandService {
                 .map(currentBrand-> new Brand(
                         currentBrand.getName(),
                         modelRepository.findAllByBrand_Id(currentBrand.getId()).stream()
-                                .map(model -> new Model(model.getId(), model.getName()))
+                                .map(model -> new Model(model.getId(), model.getName(), model.getCategoryVehicle(), model.getStartYear(),
+                                        model.getEndYear(),model.getImage()))
                                 .sorted(Comparator.comparing(Model::getName))
                                 .collect(Collectors.toList())
-                )).sorted(Comparator.comparing(Brand::getBrand))
+                )).sorted(Comparator.comparing(Brand::getName))
                 .collect(Collectors.toList());
 
     }
 
     @Override
-    public List<GetAllBrands> getAllBrands() {
+    public List<Brands> getAllBrands() {
+        List<Brands> all = this.brandRepository.findAll();
 
-//
-//        List<GetAllBrands> testBrand = this.brandRepository.findAll().stream()
-//                .map(brand -> {
-//                    GetAllBrands currentBrand = new GetAllBrands();
-//                   // currentBrand.setCategory(brand.getCategory());
-//                    currentBrand.setName(brand.getName());
-//                    currentBrand.setImage(brand.getImage());
-//                    currentBrand.setStartYear(brand.getStartYear());
-//                    currentBrand.setEndYear(brand.getEndYear());
-//                    return currentBrand;
-//                }).toList();
-//
-//        System.out.printf("test");
 
-        return null;
+        return all;
     }
+
 }

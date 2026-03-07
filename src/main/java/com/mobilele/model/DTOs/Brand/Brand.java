@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Brand {
 
-    private String brand;
+    private String name;
     private List<Model>  models;
 
 }

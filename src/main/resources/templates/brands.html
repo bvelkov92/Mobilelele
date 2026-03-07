@@ -12,31 +12,34 @@
 <div class="container">
     <h2 class="text-center text-white m-3">All Brands</h2>
     <div class='row mb-4 d-flex justify-content-around'
-    th:each = "brand : ${allBrands}"
+    th:each = "brand : ${brands}"
     >
         <div  class="brand-section col-md-5 mr-auto d-flex flex-column">
-            <h2>Car brand:
-                <span th:text = "${brand.name}" >Brand name</span>
+            <h2>Brand:
+                <span th:text = "${brand.name}" ></span>
             </h2>
-            <div>Models:
-                <table>
+
+
+            <div>
+                <tr>
+                    <th>No</th>
+                    <th >Model</th>
+                    <th >Category</th>
+                    <th >Start Year</th>
+                    <th >End Year</th>
+                    <!--                <th><img alt="image" src="/" class="img-thumbnail rounded"></th>-->
+                </tr>
+
+                <table th:each = "model : ${brand.models}">
                     <tr>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Start Year</th>
-                        <th>End Year</th>
-                        <th>Picture</th>
+                        <th th:text = "${model.id}">No</th>
+                        <th th:text = "${model.name}">Name</th>
+<!--                        <th th:text = "${brand.category_vehicle}">Category</th>-->
+                        <th th:text = "${model.startYear}">Start Year</th>
+                        <th th:text = "${model.endYear}">End Year</th>
+                        <th th:text = "${model.image}">Picture</th>
                     </tr>
-                    <tr>
-                        <th>No</th>
-                        <th >Model Name</th>
-                        <th >Model Category</th>
-                        <th >Model Start Year</th>
-                        <th >Model End Year</th>
-                        <th><img alt="image" src="/"
-                                 class="img-thumbnail rounded"></th>
-                    </tr>
+
                 </table>
             </div>
         </div>

@@ -45,7 +45,7 @@
                         class="form-control">
                     <option value="">- Select a model -</option>
                     <optgroup th:each="currentBrand : ${brands}"
-                              th:label="${currentBrand.brand}">
+                              th:label="${currentBrand.name}">
 
                         <option th:each="m : ${currentBrand.models}"
                                 th:value="${m.id}"

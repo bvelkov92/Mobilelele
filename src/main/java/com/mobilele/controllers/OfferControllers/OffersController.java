@@ -67,8 +67,8 @@ public class OffersController {
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("saveOffer", saveOffer);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.saveOffer", bindingResult);
+            redirectAttributes.addFlashAttribute("addOfferDto", saveOffer);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferDto", bindingResult);
             return "redirect:/offers/add";
         }
             this.offerService.saveOffer(saveOffer);
