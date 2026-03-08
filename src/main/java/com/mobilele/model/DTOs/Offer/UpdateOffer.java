@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 
 @Getter
 @Setter
@@ -21,8 +23,8 @@ public class UpdateOffer {
     private Long id;
 
     @NotNull
-    @Positive
-    private Integer price;
+    @DecimalMin("0.01")
+    private BigDecimal price;
 
     @NotNull
     private EngineTypeEnum engine;
@@ -31,7 +33,7 @@ public class UpdateOffer {
     private TransmissionTypeEnum transmissionType;
 
     @NotNull
-    @Min(1930)
+    @Min(1800)
     private Integer year;
 
     @Positive
@@ -39,9 +41,10 @@ public class UpdateOffer {
     private Integer mileage;
 
     @Size(min = 10, max = 512)
+    @NotBlank
     private String description;
 
-    @NotEmpty
+    @NotBlank
     private String imageUrl;
 
 }

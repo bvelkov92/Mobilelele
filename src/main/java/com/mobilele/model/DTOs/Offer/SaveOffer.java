@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,8 +23,8 @@ public class SaveOffer {
     private TypeOfVehicleEnums typeOfVehicle;
 
     @NotNull
-    @Positive
-    private Integer price;
+    @DecimalMin("0.01")
+    private BigDecimal price;
 
     @NotNull
     private EngineTypeEnum engine;
@@ -31,17 +33,18 @@ public class SaveOffer {
     private TransmissionTypeEnum transmissionType;
 
     @NotNull
-    @Min(1930)
+    @Min(1800)
     private Integer year;
 
-    @Positive
+    @Min(0)
     @NotNull
     private Integer mileage;
 
     @Size(min = 10, max = 512)
+    @NotBlank
     private String description;
 
-    @NotEmpty
+    @NotBlank
     private String imageUrl;
 
 }

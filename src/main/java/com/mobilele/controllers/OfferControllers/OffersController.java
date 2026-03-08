@@ -55,8 +55,8 @@ public class OffersController {
     @GetMapping("/add")
     public String AddOffer(Model model){
 
-        if (!model.containsAttribute("addOfferDto")){
-            model.addAttribute("addOfferDto", new SaveOffer());
+        if (!model.containsAttribute("saveOffer")){
+            model.addAttribute("saveOffer", new SaveOffer());
         }
 
          return "offer-add";
@@ -67,8 +67,8 @@ public class OffersController {
                                      BindingResult bindingResult,
                                      RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("addOfferDto", saveOffer);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferDto", bindingResult);
+            redirectAttributes.addFlashAttribute("saveOffer", saveOffer);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.saveOffer", bindingResult);
             return "redirect:/offers/add";
         }
             this.offerService.saveOffer(saveOffer);
@@ -85,10 +85,14 @@ public class OffersController {
     @GetMapping("/{id}/update")
     public String updateOffer (@PathVariable Long id, Model model){
 
-        UpdateOffer updateOffer = offerService.getUpdateDtoDetails(id);
-        model.addAttribute("updateOffer", updateOffer);
+        if (!model.containsAttribute("updateOffer")) {
+            UpdateOffer updateOffer = offerService.getUpdateDtoDetails(id);
+            model.addAttribute("updateOffer", updateOffer);
+        }
+
           return "update";
     }
+
 
     @PostMapping("/{id}/update")
     public String updateOffer(@PathVariable Long id, @Valid UpdateOffer updateOffer,

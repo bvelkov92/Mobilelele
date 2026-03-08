@@ -2,37 +2,46 @@ package com.mobilele.model.DTOs.Offer;
 
 import com.mobilele.model.enums.EngineTypeEnum;
 import com.mobilele.model.enums.TransmissionTypeEnum;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class GetAllOffers {
+
     @NotNull
     private Long id;
-    @NotNull
+
+    @NotBlank
     private String imageUrl;
+
     @NotNull
+    @Min(1800)
     private Integer mileage;
+
     @NotNull
-    @Positive
-    private double price;
+    @DecimalMin("0.01")
+    private BigDecimal price;
+
     @NotNull
     private EngineTypeEnum engine;
+
     @NotNull
     private TransmissionTypeEnum transmission;
+
     @NotNull
-    @Positive
+    @Min(1800)
     private Integer year;
 
-    @NotNull
+    @NotBlank
     private String brand;
 
-    @NotNull
+    @NotBlank
     private String model;
 
 }

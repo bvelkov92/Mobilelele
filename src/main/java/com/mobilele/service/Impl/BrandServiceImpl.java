@@ -1,5 +1,6 @@
 package com.mobilele.service.Impl;
 
+import com.mobilele.model.DTOs.Brand.AddNewBrand;
 import com.mobilele.model.DTOs.Brand.Brand;
 import com.mobilele.model.DTOs.Model.Model;
 import com.mobilele.model.entity.Brands;
@@ -44,9 +45,14 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<Brands> getAllBrands() {
         List<Brands> all = this.brandRepository.findAll();
-
-
         return all;
+    }
+
+    @Override
+    public boolean addNewBrand(AddNewBrand brand) {
+        boolean foundBrand = this.brandRepository.findByName(brand.getBrandName()).isPresent();
+
+        return foundBrand;
     }
 
 }

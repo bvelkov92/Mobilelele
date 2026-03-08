@@ -28,7 +28,7 @@
                     <option value="">- Select a model -</option>
                     <optgroup
                                  th:each = "currentBrand : ${brands}"
-                                th:label = "${currentBrand.brand}">
+                                th:label = "${currentBrand.name}">
 
                         <option th:each="m : ${currentBrand.models}"
                                 th:value="${m.id}"
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="price" class="text-white font-weight-bold">Price</label>
-                <input  id="price" type="number"
+                <input  id="price" type="text"
                         th:field="*{price}"
                         th:errorclass="is-invalid"
                         class="form-control"

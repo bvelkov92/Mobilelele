@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "offer")
 @Getter
@@ -16,33 +18,24 @@ import lombok.Setter;
 public class Offers extends BaseEntity{
 
     @Column(nullable = false)
-    @NotNull
-    @Size(min = 20)
     private String description;
 
     @Column(nullable = false)
-    @NotNull
     private EngineTypeEnum engine;
 
     @Column
     private String imageUrl;
 
     @Column(nullable = false)
-    @NotNull
     private int mileage;
 
     @Column(nullable = false)
-    @NotNull
-    @Positive
-    private double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
-    @NotNull
     private TransmissionTypeEnum transmission;
 
     @Column(nullable = false)
-    @Positive
-    @NotNull
     private int year;
 
     @ManyToOne

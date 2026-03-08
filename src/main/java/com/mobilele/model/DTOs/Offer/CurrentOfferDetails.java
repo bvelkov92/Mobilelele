@@ -1,10 +1,11 @@
 package com.mobilele.model.DTOs.Offer;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -16,15 +17,17 @@ public class CurrentOfferDetails {
     private Long id;
 
     @NotNull
+    @Min(0)
     private Integer mileage;
 
     @NotNull
-    private double price;
+    @DecimalMin("0.01")
+    private BigDecimal price;
 
-    @NotNull
+    @NotBlank
     private String engineType;
 
-    @NotNull
+    @NotBlank
     private String transmissionType;
 
     @NotNull
@@ -36,8 +39,9 @@ public class CurrentOfferDetails {
     @NotNull
     private Long modelId;
 
-    @NotNull
+    @NotBlank
     private String user;
 
+    @NotBlank
     private String imageUrl;
 }

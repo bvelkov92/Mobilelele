@@ -2,6 +2,8 @@ package com.mobilele.model.entity;
 
 import com.mobilele.model.enums.TypeOfVehicleEnums;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -21,7 +23,6 @@ public class Models extends BaseEntity{
     private TypeOfVehicleEnums categoryVehicle;
 
     @Column(name = "start_year")
-    @Positive
     private Integer startYear;
 
     @Column(name = "end_year")
