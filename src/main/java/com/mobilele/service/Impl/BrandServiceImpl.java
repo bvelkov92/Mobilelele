@@ -49,10 +49,10 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public boolean addNewBrand(AddNewBrand brand) {
-        boolean foundBrand = this.brandRepository.findByName(brand.getBrandName()).isPresent();
+    public void addNewBrand(AddNewBrand brand) {
+        Brands mappedBrand = this.modelMapper.map(brand, Brands.class);
+        this.brandRepository.save(mappedBrand);
 
-        return foundBrand;
     }
 
 }

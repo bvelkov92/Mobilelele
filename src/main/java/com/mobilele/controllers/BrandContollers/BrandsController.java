@@ -37,16 +37,17 @@ public class BrandsController {
         return "add-new-brand";
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public String addNewBrand(@Valid AddNewBrand addNewBrand,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("addNewBrand", addNewBrand);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewBrand", bindingResult);
+        return "redirect:/brands/add";
         }
 
         this.brandService.addNewBrand(addNewBrand);
-        return "redirect/:brands/all";
+        return "redirect:/brands/all";
 
     }
 }

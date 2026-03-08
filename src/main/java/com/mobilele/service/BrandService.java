@@ -11,5 +11,5 @@ public interface BrandService {
     List<Brand> getAllModelsFromBrand();
     List<Brands> getAllBrands();
 
-    boolean addNewBrand(AddNewBrand brand);
+    void addNewBrand(AddNewBrand brand);
 }

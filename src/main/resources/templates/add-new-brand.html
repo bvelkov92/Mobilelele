@@ -10,21 +10,20 @@
     <nav th:replace="~{fragments/navbar}"></nav>
 </div>
 
-<!--          th:object = "${addNewBrand}"-->
-<!--          th:action = "@{/brands/add"-->
-
 <div class="container">
     <h2 class="text-center text-white">Add new brand</h2>
-    <form
+    <form   th:method="POST"
+            th:object = "${addNewBrand}"
+            th:action = "@{/brands/add}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="brandName" class="text-white font-weight-bold">Price</label>
+                <label for="brandName" class="text-white font-weight-bold">Brand</label>
                 <input id="brandName" type="text"
                        th:field="*{brandName}"
                        th:errorclass="is-invalid"
                        class="form-control"
-                       placeholder="Suggested price"/>
+                       placeholder="Brand name"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     The brand already added!
                 </p>
@@ -32,7 +31,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Update Offer"/>
+                    <input type="submit" class="btn btn-info btn-lg mt-4" value="Add brand"/>
                 </div>
             </div>
         </div>
