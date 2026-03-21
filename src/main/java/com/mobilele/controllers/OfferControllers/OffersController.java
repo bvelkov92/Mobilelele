@@ -28,7 +28,7 @@ public class OffersController {
 
     @ModelAttribute("brands")
     public Object brands() {
-        return brandService.getAllModelsFromBrand();
+        return brandService.getAllBrandsAndTheirModels();
     }
 
     @ModelAttribute("engines")

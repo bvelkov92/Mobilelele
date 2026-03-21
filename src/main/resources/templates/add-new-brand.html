@@ -10,11 +10,41 @@
     <nav th:replace="~{fragments/navbar}"></nav>
 </div>
 
+
 <div class="container">
+    <div class="form-group col-md-6 mb-3">
+
+        <table class="table">
+            <tr th:each="brand : ${getAllBrands}">
+                <td style="background:white;"
+                    th:text="${brand.name}">
+                </td>
+
+                <td>
+                    <a th:href="@{/brands/{id}/models(id=${brand.id})}">
+                        <button type="submit" class="btn btn-info btn-lg">See models</button>
+                    </a>
+                </td>
+
+                <form th:method="POST"
+                    th:action="@{/administration/brandAndModels/{id}/delete(id=${brand.id})}">
+                <td>
+                    <button type="submit" class="btn btn-info btn-lg">Delete brand</button>
+                </td>
+                </form>
+                <tr th:each = "model: ${getModels}">
+                <td   th:value = "${model.id}"
+                    th:text = "${model.name}">
+                </td>
+            </tr>
+            </tr>
+
+        </table>
+</div>
     <h2 class="text-center text-white">Add new brand</h2>
     <form   th:method="POST"
             th:object = "${addNewBrand}"
-            th:action = "@{/brands/add}"
+            th:action = "@{/administration/brandsAndModels}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
@@ -28,6 +58,9 @@
                     The brand already added!
                 </p>
             </div>
+        </div>
+
+
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">

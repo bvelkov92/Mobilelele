@@ -10,12 +10,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "models")
+@Table(name = "models",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "brands_id"}))
 @Getter
 @Setter
 public class Models extends BaseEntity{
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)

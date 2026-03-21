@@ -1,15 +1,16 @@
 package com.mobilele.repository;
 
-import com.mobilele.model.entity.Brands;
 import com.mobilele.model.entity.Models;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ModelRepository extends JpaRepository <Models, Long > {
 
-    List<Models> findAllByBrand_Id(Long id);
 
+    Optional<Models> findByName(String name);
+
+    void deleteAllByBrand_Id(Long id);
 }

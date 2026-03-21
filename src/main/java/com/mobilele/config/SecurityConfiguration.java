@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/offers/add", "/offers/all").authenticated()
-                        .requestMatchers("/brands/add").hasRole("ADMIN")
+                        .requestMatchers("/brands/add","/administration", "/administration/brandsAndModels", "/administration/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
         ).formLogin(

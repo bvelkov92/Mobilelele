@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+    <title>Models</title>
+</head>
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container">
+    <h2 class="text-center text-white m-3"><span th:text = "${getOrAddModel.name}"></span></h2>
+    <div class='row mb-4 d-flex justify-content-around'>
+        <div  class="brand-section col-md-5 mr-auto d-flex flex-column">
+
+            <table class="table">
+
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Model</th>
+                    <th>Category</th>
+                    <th>Start Year</th>
+                    <th>End Year</th>
+                    <th>Picture</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="model : ${getOrAddModel.models}">
+                    <td th:text="${model.id}"></td>
+                    <td th:text="${model.name}"></td>
+                    <td th:text="${model.categoryVehicle}"></td>
+                    <td th:text="${model.startYear}"></td>
+                    <td th:text="${model.endYear}"></td>
+                    <td th:text="${model.image}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <h2 class="text-center text-white">Add new model</h2>
+    <form th:method="post"
+          th:action="@{/brands/{id}/models(id=${getOrAddModel.id})}"
+          th:object="${addNewModelDto}"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <div class="form-group mb-3">
+            <label for="name" class="text-white font-weight-bold">Model</label>
+            <input id="name"
+                    th:field ="*{name}"
+                   th:errorclass = "is-invalid"
+                   class="form-control"
+                   placeholder="Model name"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                Model is already added!
+            </p>
+        </div>
+
+        <div class="form-group col-md-6 mb-3">
+            <label class="text-center text-white font-weight-bold" for="typeVehicle">Vehicle type</label>
+            <select id="typeVehicle"
+                    th:field="*{categoryVehicle}"
+                    th:errorclass="is-invalid"
+                    class="form-control">
+                <option value="">- Select type -</option>
+                    <option th:each="m : ${typeOfVehicle}"
+                            th:value="${m}"
+                            th:text="${m}">
+                    </option>
+            </select>
+            <p class="invalid-feedback errors alert alert-danger">
+                The type of vehicle is same of current one!
+            </p>
+            </div>
+        <div class="form-group mb-3">
+            <label for="startYear" class="text-white font-weight-bold">Start Year</label>
+            <input id="startYear"
+                    th:field="*{startYear}"
+                   th:errorclass="is-invalid"
+                   class="form-control"
+                   placeholder="Start year"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                Invalid year!
+            </p>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="endYear" class="text-white font-weight-bold">End Year</label>
+            <input id="endYear"
+                    th:field="*{endYear}"
+                   th:errorclass="is-invalid"
+                   class="form-control"
+                   placeholder="End year"/>
+        <p class="invalid-feedback errors alert alert-danger">
+            Invalid year!
+        </p>
+        </div>
+            <div>
+                <button type="submit" class="btn btn-danger btn-lg">Add model</button>
+            </div>
+    </form>
+    </div>
+             <footer> </footer>
+</body>
+</html>

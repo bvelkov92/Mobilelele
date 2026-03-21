@@ -1,6 +1,6 @@
 package com.mobilele.model.DTOs.Brand;
 
-import com.mobilele.model.DTOs.Model.Model;
+import com.mobilele.model.DTOs.Model.GetModelDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -16,10 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Brand {
 
+    private Long id;
+
     @NotBlank
     private String name;
 
     @NotEmpty
-    private List<Model>  models;
+    private List<GetModelDto>  models;
 
 }
