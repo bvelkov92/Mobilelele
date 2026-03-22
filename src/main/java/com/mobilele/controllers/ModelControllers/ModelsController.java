@@ -2,7 +2,6 @@ package com.mobilele.controllers.ModelControllers;
 
 import com.mobilele.model.DTOs.Brand.Brand;
 import com.mobilele.model.DTOs.Model.AddNewModelDto;
-import com.mobilele.model.DTOs.Model.GetModelDto;
 import com.mobilele.model.enums.TypeOfVehicleEnums;
 import com.mobilele.service.BrandService;
 import com.mobilele.service.ModelService;
@@ -36,19 +35,24 @@ public class ModelsController {
         Brand currentBrand = this.brandService.getCurrentBrand(id);
             model.addAttribute("getOrAddModel", currentBrand);
             model.addAttribute("typeOfVehicle", TypeOfVehicleEnums.values());
+
+        if (!model.containsAttribute("addNewModelDto")) {
             model.addAttribute("addNewModelDto", new AddNewModelDto());
+        }
             return "models-in-selected-brand";
     }
 
     @PostMapping("/brands/{id}/models")
     public String addNewModel(@PathVariable Long id, @Valid AddNewModelDto addNewModelDto,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes){
+
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("AddNewModelDto", addNewModelDto);
+            redirectAttributes.addFlashAttribute("addNewModelDto", addNewModelDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewModelDto", bindingResult);
           return   "redirect:/brands/" + id + "/models";
         }
 
+        //TODO: Да направя валидации в DTO, да се вмъкне опция за едитване и изтриване на модела.
         this.modelService.addModelToBrand(id, addNewModelDto);
         return "redirect:/";
     }

@@ -1,15 +1,12 @@
 package com.mobilele.service.Impl;
 
 import com.mobilele.model.DTOs.Model.AddNewModelDto;
-import com.mobilele.model.entity.Brands;
 import com.mobilele.model.entity.Models;
 import com.mobilele.repository.BrandRepository;
 import com.mobilele.repository.ModelRepository;
 import com.mobilele.service.ModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -27,23 +24,27 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void addModelToBrand(Long brandId, AddNewModelDto newModel) {
-        Models foundModel = this.modelRepository.findByName(newModel.getName()).orElse(null);
-        boolean isModelFoundInSameBrand=false;
-        if (foundModel!=null) {
-            isModelFoundInSameBrand = this.brandRepository.findByIdAndModels_id(brandId, foundModel.getId()).isPresent();
-        }
 
-            if (isModelFoundInSameBrand) {
-                foundModel.setName(newModel.getName().trim());
-                foundModel.setStartYear(newModel.getStartYear());
-                foundModel.setCategoryVehicle(newModel.getCategoryVehicle());
-                foundModel.setBrand(this.brandRepository.getReferenceById(brandId));
-                this.modelRepository.save(foundModel);
-            } else {
+        //TODO: This is for option "Edit model"
+//        Models foundModel = this.modelRepository.findByName(newModel.getName()).orElse(null);
+//        Brands foundBrand = this.brandRepository.findBrandAndModelsById(brandId).orElse(null);
+
+//        boolean isModelFoundInSameBrand = false;
+//        if (foundBrand!=null && foundModel!=null){
+//          isModelFoundInSameBrand = foundBrand.getModels()
+//                    .stream().anyMatch(model ->model.getName().trim().equals(foundModel.getName().trim()));
+//        }
+
+//            if (isModelFoundInSameBrand) {
+//                foundModel.setName(newModel.getName().trim());
+//                foundModel.setStartYear(newModel.getStartYear());
+//                foundModel.setCategoryVehicle(newModel.getCategoryVehicle());
+//                foundModel.setBrand(this.brandRepository.getReferenceById(brandId));
+//                this.modelRepository.save(foundModel);
+//            } else {
+
                 Models model = modelMapper.map(newModel, Models.class);
-                model.setBrand(this.brandRepository.findById(brandId).orElseThrow());
+                model.setBrand(this.brandRepository.findById(brandId).orElseThrow(()-> new RuntimeException("Brand not found!")));
                 this.modelRepository.save(model);
-            }
         }
-    //}
 }
