@@ -1,9 +1,9 @@
 package com.mobilele.controllers.ModelControllers;
-
 import com.mobilele.model.enums.TypeOfVehicleEnums;
 import com.mobilele.service.BrandService;
 import com.mobilele.service.ModelService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,4 +21,5 @@ public class ModelsController {
     public TypeOfVehicleEnums[] typeOfVehicle() {
         return TypeOfVehicleEnums.values();
     }
+
     }

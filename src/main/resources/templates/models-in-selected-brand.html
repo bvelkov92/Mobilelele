@@ -43,7 +43,7 @@
     </div>
     <h2 class="text-center text-white">Add new model</h2>
     <form th:method="post"
-          th:action="@{/brands/{id}/models(id=${getOrAddModel.id})}"
+          th:action="@{/administration/brands/{id}/models(id=${getOrAddModel.id})}"
           th:object="${addNewModelDto}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 

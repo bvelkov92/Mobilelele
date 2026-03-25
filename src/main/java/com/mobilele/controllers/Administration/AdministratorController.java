@@ -84,7 +84,7 @@ public class AdministratorController {
             return   "redirect:/brands/" + id + "/models";
         }
 
-        //TODO: да се вмъкне опция за едитване и изтриване на модела.
+
         this.modelService.addModelToBrand(id, addNewModelDto);
         return "redirect:/";
     }

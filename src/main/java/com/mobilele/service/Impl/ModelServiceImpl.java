@@ -8,6 +8,8 @@ import com.mobilele.service.ModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class ModelServiceImpl implements ModelService {
 
@@ -47,4 +49,9 @@ public class ModelServiceImpl implements ModelService {
                 model.setBrand(this.brandRepository.findById(brandId).orElseThrow(()-> new RuntimeException("Brand not found!")));
                 this.modelRepository.save(model);
         }
+
+    @Override
+    public Set<Models> getAllModelsFromBrand(Long brandId) {
+        return this.modelRepository.findAllByBrand_Id(brandId);
+    }
 }
