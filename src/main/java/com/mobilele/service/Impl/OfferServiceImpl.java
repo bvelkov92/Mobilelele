@@ -84,12 +84,15 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public CurrentOfferDetails getDetails(Long id) {
         Offers offer = this.offerRepository.findById(id).orElse(null);
-        String user = offer.getSeller().getUsername();
-        CurrentOfferDetails mappedOffer = this.modelMapper.map(offer, CurrentOfferDetails.class);
-        mappedOffer.setUser(user);
+        if (offer != null) {
+            String user = offer.getSeller().getUsername();
+            CurrentOfferDetails mappedOffer = this.modelMapper.map(offer, CurrentOfferDetails.class);
+            mappedOffer.setUser(user);
 
-        return mappedOffer;
-    }
+            return mappedOffer;
+        }
+        throw new NullPointerException();
+        }
 
     @Override
     public void updateOffer(UpdateOffer updatedValues, Long id) {
@@ -110,4 +113,5 @@ public class OfferServiceImpl implements OfferService {
     public void deleteOffer(Long id) {
         this.offerRepository.deleteById(id);
     }
+
 }

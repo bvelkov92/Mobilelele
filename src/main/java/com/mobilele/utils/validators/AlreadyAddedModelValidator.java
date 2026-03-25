@@ -1,7 +1,7 @@
-package com.mobilele.utils;
+package com.mobilele.utils.validators;
 
 import com.mobilele.repository.ModelRepository;
-import com.mobilele.utils.validators.AlreadyAddedModelValidation;
+import com.mobilele.utils.anotations.AlreadyAddedModelValidation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -12,11 +12,6 @@ public class AlreadyAddedModelValidator implements ConstraintValidator<AlreadyAd
 
     public AlreadyAddedModelValidator(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
-    }
-
-    @Override
-    public void initialize(AlreadyAddedModelValidation constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override

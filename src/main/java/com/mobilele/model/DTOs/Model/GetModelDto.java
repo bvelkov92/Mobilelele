@@ -28,6 +28,7 @@ public class GetModelDto {
     private Integer startYear;
 
     @NotBlank
+    @Min(1801)
     private Integer endYear;
 
     @NotBlank

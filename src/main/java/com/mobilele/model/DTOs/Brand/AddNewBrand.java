@@ -1,7 +1,7 @@
 package com.mobilele.model.DTOs.Brand;
 
 import com.mobilele.model.entity.Models;
-import com.mobilele.utils.validators.AlreadyAddedBrandsValidation;
+import com.mobilele.utils.anotations.AlreadyAddedBrandsValidation;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

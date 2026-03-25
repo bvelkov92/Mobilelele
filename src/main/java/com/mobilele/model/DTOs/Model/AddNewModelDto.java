@@ -1,7 +1,7 @@
 package com.mobilele.model.DTOs.Model;
 
 import com.mobilele.model.enums.TypeOfVehicleEnums;
-import com.mobilele.utils.validators.AlreadyAddedModelValidation;
+import com.mobilele.utils.anotations.AlreadyAddedModelValidation;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

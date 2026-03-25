@@ -1,5 +1,6 @@
 package com.mobilele.model.DTOs.User;
 
+import com.mobilele.utils.anotations.EqualsPasswordsValidation;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsPasswordsValidation
 public class UserLogin {
 
     @NotBlank

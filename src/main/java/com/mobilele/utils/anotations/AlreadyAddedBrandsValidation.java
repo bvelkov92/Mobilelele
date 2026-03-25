@@ -1,18 +1,17 @@
-package com.mobilele.utils.validators;
-
-import com.mobilele.utils.AlreadyAddedModelValidator;
+package com.mobilele.utils.anotations;
+import com.mobilele.utils.validators.AlreadyAddedBrandsValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = AlreadyAddedModelValidator.class)
+@Constraint(validatedBy = AlreadyAddedBrandsValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AlreadyAddedModelValidation {
+public @interface AlreadyAddedBrandsValidation {
 
-    String message() default "This model already added!";
+    String message() default "This brand already added!";
 
     Class<?>[] groups() default {};
 

@@ -1,8 +1,8 @@
 package com.mobilele.model.DTOs.User;
 
+import com.mobilele.utils.anotations.EqualsPasswordsValidation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsPasswordsValidation
 public class UserRegister {
 
    @NotBlank
@@ -23,8 +24,6 @@ public class UserRegister {
    @NotBlank
    private String email;
 
-
-   //TODO: Validation of passwords.
    @Size(min = 6, max = 12)
    @NotBlank
    private String password;
