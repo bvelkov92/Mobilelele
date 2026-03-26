@@ -6,7 +6,9 @@ import com.mobilele.repository.BrandRepository;
 import com.mobilele.repository.ModelRepository;
 import com.mobilele.service.ModelService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -54,4 +56,11 @@ public class ModelServiceImpl implements ModelService {
     public Set<Models> getAllModelsFromBrand(Long brandId) {
         return this.modelRepository.findAllByBrand_Id(brandId);
     }
+
+    @Transactional
+    @Override
+    public void deleteSelectedModel(Long bId,Long mId) {
+        this.modelRepository.deleteByIdAndBrand_Id(mId,bId);
+    }
+
 }

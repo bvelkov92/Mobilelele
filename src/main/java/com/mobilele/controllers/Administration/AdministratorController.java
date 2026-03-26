@@ -50,13 +50,13 @@ public class AdministratorController {
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("addNewBrand", addNewBrand);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewBrand", bindingResult);
-            return "redirect:/add";
+            return "redirect:/administration/brandsAndModels";
         }
         this.brandService.addNewBrand(addNewBrand);
-        return "redirect:/all";
+        return "redirect:/administration/brandsAndModels";
     }
 
-    @PostMapping("/{id}/delete")
+    @PostMapping("/brandAndModels/{id}/delete")
     public String deleteBrand(@PathVariable Long id){
         this.brandService.deleteBrand(id);
         return "redirect:/administration/brandsAndModels";
@@ -74,21 +74,26 @@ public class AdministratorController {
         return "models-in-selected-brand";
     }
 
-    @PostMapping("/brands/{id}/models")
+    @PostMapping("/brandsAndModels/{id}/models")
     public String addNewModel(@PathVariable Long id, @Valid AddNewModelDto addNewModelDto,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("addNewModelDto", addNewModelDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewModelDto", bindingResult);
-            return   "redirect:/brands/" + id + "/models";
+            return   "redirect:/administration/brands/" + id + "/models";
         }
 
-
         this.modelService.addModelToBrand(id, addNewModelDto);
-        return "redirect:/";
+        return "redirect:/administration/brands/" +id + "/models";
     }
 
+
+    @PostMapping ("/brands/{brandId}/models/{modelId}/delete")
+    public String deleteSelectedModel (@PathVariable Long brandId, @PathVariable Long modelId){
+        this.modelService.deleteSelectedModel(brandId, modelId);
+        return "redirect:/administration/brands/" +brandId +"/models";
+    }
 
     /// ============================ U S E R S    A D M I N I S T R A T I O N =======================================
 
@@ -105,7 +110,6 @@ public class AdministratorController {
     @PostMapping("/users/{id}/delete")
     public String postDeleteSelectedUser(@PathVariable Long id){
         this.userService.deleteUserWithId(id);
-
         return "redirect:/administration/users";
     }
 

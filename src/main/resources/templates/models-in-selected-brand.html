@@ -19,7 +19,6 @@
 
                 <thead>
                 <tr>
-                    <th>No</th>
                     <th>Model</th>
                     <th>Category</th>
                     <th>Start Year</th>
@@ -29,12 +28,19 @@
                 </thead>
                 <tbody>
                 <tr th:each="model : ${getOrAddModel.models}">
-                    <td th:text="${model.id}"></td>
                     <td th:text="${model.name}"></td>
                     <td th:text="${model.categoryVehicle}"></td>
                     <td th:text="${model.startYear}"></td>
                     <td th:text="${model.endYear}"></td>
                     <td th:text="${model.image}"></td>
+                    <td>
+                    <form
+                    th:method = "post"
+                    th:action="@{/administration/brands/{brandId}/models/{modelId}/delete(brandId=${getOrAddModel.id}, modelId=${model.id})}"
+                    >
+                            <button type="submit" class="btn btn-danger btn-lg">Delete model</button>
+                    </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

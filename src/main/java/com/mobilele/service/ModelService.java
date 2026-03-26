@@ -11,4 +11,6 @@ public interface ModelService {
     void addModelToBrand(Long brandId, AddNewModelDto addModel);
 
     Set<Models> getAllModelsFromBrand(Long brandId);
+    void deleteSelectedModel(Long modelId, Long brandId);
+
 }
