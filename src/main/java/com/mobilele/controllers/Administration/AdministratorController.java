@@ -35,7 +35,7 @@ public class AdministratorController {
     //========================== B R A N D S   A N D   M O D E L S =========================
 
 
-    @GetMapping("/brandsAndModels")
+    @GetMapping("/brandAndModels")
     public String addNewBrand(Model model){
         if (!model.containsAttribute("addNewBrand")) {
             model.addAttribute("addNewBrand",new AddNewBrand());
@@ -44,25 +44,25 @@ public class AdministratorController {
         return "add-new-brand";
     }
 
-    @PostMapping("/brandsAndModels")
+    @PostMapping("/brandAndModels")
     public String addNewBrand(@Valid AddNewBrand addNewBrand,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("addNewBrand", addNewBrand);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewBrand", bindingResult);
-            return "redirect:/administration/brandsAndModels";
+            return "redirect:/administration/brandAndModels";
         }
         this.brandService.addNewBrand(addNewBrand);
-        return "redirect:/administration/brandsAndModels";
+        return "redirect:/administration/brandAndModels";
     }
 
     @PostMapping("/brandAndModels/{id}/delete")
     public String deleteBrand(@PathVariable Long id){
         this.brandService.deleteBrand(id);
-        return "redirect:/administration/brandsAndModels";
+        return "redirect:/administration/brandAndModels";
     }
 
-    @GetMapping("/brands/{id}/models")
+    @GetMapping("/brandAndModels/{id}/models")
     public String addNewModel(@PathVariable Long id, Model model){
         Brand currentBrand = this.brandService.getCurrentBrand(id);
         model.addAttribute("getOrAddModel", currentBrand);
@@ -74,25 +74,25 @@ public class AdministratorController {
         return "models-in-selected-brand";
     }
 
-    @PostMapping("/brandsAndModels/{id}/models")
+    @PostMapping("/brandAndModels/{id}/models")
     public String addNewModel(@PathVariable Long id, @Valid AddNewModelDto addNewModelDto,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("addNewModelDto", addNewModelDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addNewModelDto", bindingResult);
-            return   "redirect:/administration/brands/" + id + "/models";
+            return   "redirect:/administration/brandAndModels/" + id + "/models";
         }
 
         this.modelService.addModelToBrand(id, addNewModelDto);
-        return "redirect:/administration/brands/" +id + "/models";
+        return "redirect:/administration/brandAndModels/" +id + "/models";
     }
 
 
-    @PostMapping ("/brands/{brandId}/models/{modelId}/delete")
+    @PostMapping ("/brandAndModels/{brandId}/models/{modelId}/delete")
     public String deleteSelectedModel (@PathVariable Long brandId, @PathVariable Long modelId){
         this.modelService.deleteSelectedModel(brandId, modelId);
-        return "redirect:/administration/brands/" +brandId +"/models";
+        return "redirect:/administration/brandAndModels/" +brandId +"/models";
     }
 
     /// ============================ U S E R S    A D M I N I S T R A T I O N =======================================

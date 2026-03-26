@@ -36,7 +36,7 @@
                     <td>
                     <form
                     th:method = "post"
-                    th:action="@{/administration/brands/{brandId}/models/{modelId}/delete(brandId=${getOrAddModel.id}, modelId=${model.id})}"
+                    th:action="@{/administration/brandAndModels/{brandId}/models/{modelId}/delete(brandId=${getOrAddModel.id}, modelId=${model.id})}"
                     >
                             <button type="submit" class="btn btn-danger btn-lg">Delete model</button>
                     </form>
@@ -49,7 +49,7 @@
     </div>
     <h2 class="text-center text-white">Add new model</h2>
     <form th:method="post"
-          th:action="@{/administration/brands/{id}/models(id=${getOrAddModel.id})}"
+          th:action="@{/administration/brandAndModels/{id}/models(id=${getOrAddModel.id})}"
           th:object="${addNewModelDto}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
