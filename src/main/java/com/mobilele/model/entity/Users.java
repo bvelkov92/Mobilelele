@@ -36,6 +36,9 @@ public class Users extends BaseEntity {
     @Column
     private String imageUrl;
 
+    @Column
+    private Integer age;
+
     @ManyToOne()
     private Roles role;
 

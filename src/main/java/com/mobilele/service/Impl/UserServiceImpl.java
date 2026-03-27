@@ -74,5 +74,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(id);
     }
 
+    @Override
+    public Users getUserById() {
+        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
+        String email = authenticatedUser.getName().trim();
+        Long id = this.userRepository.findUserByEmail(email).orElseThrow(()->
+                        new NullPointerException("There is not logged user!"))
+                                                        .getId();
+        return this.userRepository.findById(id).orElseThrow(() -> new NullPointerException("Not found user"));
+    }
 }
 

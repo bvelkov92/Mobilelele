@@ -35,12 +35,10 @@
                  sec:authorize="hasRole('ADMIN')">
                 <a class="card-link "
                    th:href="@{/offers/{id}/update(id=${offer.id})}">Update</a>
-                <a class="card-link"
-                   data-bs-toggle="modal"
-                   data-bs-target="#deleteModal"
-                   th:attr="data-id=${offer.id}">
-                    Delete
-                </a>
+                <form th:action="@{/offers/{id}/delete(id=${offer.id})}"
+                      th:method="post">
+                    <button type="submit">Delete</button>
+                </form>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
