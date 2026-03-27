@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" >
 
-<head th:replace="~{/fragments/head}">
-</head>
+<head th:replace="~{/fragments/head}"></head>
 <body>
 
 <div>
@@ -12,37 +11,34 @@
 <div class="container">
     <h2 class="text-center text-white m-3">All Brands</h2>
     <div class='row mb-4 d-flex justify-content-around'
-    th:each = "brand : ${brands}"
-    >
+    th:each = "brand : ${brands}">
         <div  class="brand-section col-md-5 mr-auto d-flex flex-column">
             <h2>Brand:
                 <span th:text = "${brand.name}" ></span>
             </h2>
-
-
-            <div>
+            <table class="table">
+                <thead>
                 <tr>
-                    <th >Model</th>
-                    <th >Category</th>
-                    <th >Start Year</th>
-                    <th >End Year</th>
-                    <!--                <th><img alt="image" src="/" class="img-thumbnail rounded"></th>-->
+                    <th>Model</th>
+                    <th>Category</th>
+                    <th>Start Year</th>
+                    <th>End Year</th>
+                    <th>Picture</th>
                 </tr>
+                </thead>
 
-                <table th:each = "model : ${brand.models}">
-                    <tr>
-                        <th th:text = "${model.name}">Name</th>
-                        <th th:text = "${model.categoryVehicle}">Category</th>
-                        <th th:text = "${model.startYear}">Start Year</th>
-                        <th th:text = "${model.endYear}">End Year</th>
-                        <th th:text = "${model.image}">Picture</th>
-                    </tr>
-
-                </table>
-            </div>
+                <tbody>
+                <tr th:each="model : ${brand.models}">
+                    <td th:text="${model.name}"></td>
+                    <td th:text="${model.categoryVehicle}"></td>
+                    <td th:text="${model.startYear}"></td>
+                    <td th:text="${model.endYear}"></td>
+                    <td th:text="${model.image}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
     <div>
              <footer> </footer>
     </div>
