@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/fragments/head}">
+    <title></title>
 </head>
 
 <body>
@@ -15,31 +16,25 @@
     <div class="form-group col-md-6 mb-3">
 
         <table class="table">
-            <tr th:each="brand : ${getAllBrands}">
-                <td style="background:white;"
-                    th:text="${brand.name}">
-                </td>
+        <tr th:each="brand : ${getAllBrands}">
+            <td th:text="${brand.name}"></td>
 
-                <td>
-                    <a th:href="@{/administration/brandAndModels/{id}/models(id=${brand.id})}">
-                        <button type="submit" class="btn btn-info btn-lg">See models</button>
-                    </a>
-                </td>
+            <td>
+                <a th:href="@{/administration/brands/{id}/models(id=${brand.id})}"
+                   class="btn btn-info btn-lg">
+                    See models
+                </a>
+            </td>
 
-                <form th:method="POST"
-                    th:action="@{/administration/brandAndModels/{id}/delete(id=${brand.id})}">
-                <td>
-                    <button type="submit" class="btn btn-info btn-lg">Delete brand</button>
-                </td>
+            <td>
+                <form th:action="@{/administration/{id}/delete(id=${brand.id})}" method="post">
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        Delete brand
+                    </button>
                 </form>
-                <tr th:each = "model: ${getModels}">
-                <td   th:value = "${model.id}"
-                    th:text = "${model.name}">
-                </td>
-            </tr>
-            </tr>
-
-        </table>
+            </td>
+        </tr>
+    </table>
 </div>
     <h2 class="text-center text-white">Add new brand</h2>
     <form   th:method="post"
