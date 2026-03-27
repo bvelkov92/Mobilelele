@@ -101,7 +101,7 @@ public class AdministratorController {
     public String getUserAllUsers(Model model){
         if (!model.containsAttribute("getAllUsers")){
             model.addAttribute("getAllUsers" , userService.getAllUsers());
-            model.addAttribute("loggedUserId", userService.getUserId());
+            model.addAttribute("loggedUserId", userService.getAuthenticatedUserId());
         }
         return "users-administration";
     }

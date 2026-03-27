@@ -1,5 +1,6 @@
 package com.mobilele.service.Impl;
 
+import com.mobilele.model.DTOs.User.ChangePassword;
 import com.mobilele.model.DTOs.User.UserRegister;
 import com.mobilele.model.DTOs.User.ViewAllUsersDto;
 import com.mobilele.model.entity.Users;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public Long getUserId() throws NullPointerException {
+    public Long getAuthenticatedUserId() throws NullPointerException {
         Authentication getLoggedUser = SecurityContextHolder.getContext().getAuthentication();
         Long loggedUserId = this.userRepository.findUserByEmail(getLoggedUser.getName()).orElseThrow(NullPointerException::new).getId();
 
@@ -75,13 +77,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users getUserById() {
+    public Users getAuthenticatedUser() {
         Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
         String email = authenticatedUser.getName().trim();
         Long id = this.userRepository.findUserByEmail(email).orElseThrow(()->
                         new NullPointerException("There is not logged user!"))
                                                         .getId();
         return this.userRepository.findById(id).orElseThrow(() -> new NullPointerException("Not found user"));
+    }
+
+    @Override
+    public Users getUserById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void changePassword(ChangePassword changePasswordDto,Users loggedUser) {
+        this.userRepository.findUserByEmail(loggedUser.getEmail())
+                .ifPresent(user -> user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword())));
     }
 }
 

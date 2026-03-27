@@ -1,5 +1,6 @@
 package com.mobilele.service;
 
+import com.mobilele.model.DTOs.User.ChangePassword;
 import com.mobilele.model.DTOs.User.UserRegister;
 import com.mobilele.model.DTOs.User.ViewAllUsersDto;
 import com.mobilele.model.entity.Users;
@@ -10,7 +11,9 @@ public interface UserService {
 
     void userRegister(UserRegister userRegisterDto);
     Set<ViewAllUsersDto> getAllUsers ();
-    Long getUserId();
+    Long getAuthenticatedUserId();
     void deleteUserWithId(Long id);
-    Users getUserById();
+    Users getAuthenticatedUser();
+    Users getUserById(Long id);
+    void changePassword(ChangePassword changePasswordDto, Users loggedUser);
 }

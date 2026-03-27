@@ -27,12 +27,13 @@
             </ul>
             <div class="card-body"
                  sec:authorize="isAuthenticated()">
-                <form th:action="@{/users/profile/editProfile}">
-                    <button type="submit" class="btn btn-primary">Update profile</button>
-                </form>
-                <form th:action="@{/users/profile/password}" method="get">
-                    <button type="submit" class="btn btn-primary">Change password</button>
-                </form>
+                <a th:href="@{/users/profile/editProfile}"
+                    class="btn btn-primary">Update profile
+                </a>
+                <a th:href="@{/users/profile/changePassword}"
+                         class="btn btn-primary">
+                Change Password
+            </a>
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
