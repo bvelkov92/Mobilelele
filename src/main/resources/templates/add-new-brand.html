@@ -20,14 +20,14 @@
             <td th:text="${brand.name}"></td>
 
             <td>
-                <a th:href="@{/administration/brands/{id}/models(id=${brand.id})}"
+                <a th:href="@{/administration/brandAndModels/{id}/models(id=${brand.id})}"
                    class="btn btn-info btn-lg">
                     See models
                 </a>
             </td>
 
             <td>
-                <form th:action="@{/administration/{id}/delete(id=${brand.id})}" method="post">
+                <form th:action="@{/administration/brandAndModels/{id}/delete(id=${brand.id})}" th:method="post">
                     <button type="submit" class="btn btn-danger btn-lg">
                         Delete brand
                     </button>
