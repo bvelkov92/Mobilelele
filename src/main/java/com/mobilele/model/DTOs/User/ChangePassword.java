@@ -1,6 +1,6 @@
 package com.mobilele.model.DTOs.User;
 
-import jakarta.validation.constraints.Min;
+import com.mobilele.utils.anotations.EqualsPasswordChangePasswordValidation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -8,8 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@EqualsPasswordChangePasswordValidation
 public class ChangePassword {
+
     @NotBlank
+
     private String password;
 
     @NotBlank
@@ -19,8 +22,8 @@ public class ChangePassword {
     @NotBlank
     private String confirmPassword;
 
-    public void setOldPassword(String oldPassword) {
-        this.password = oldPassword.trim();
+    public void setPassword(String password) {
+        this.password = password.trim();
     }
 
     public void setNewPassword(String newPassword) {

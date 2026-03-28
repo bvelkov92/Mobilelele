@@ -7,6 +7,7 @@ import com.mobilele.model.entity.Users;
 import com.mobilele.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,9 +69,12 @@ public class UserController {
         return "change-password";
     }
 
+    @Transactional
     @PostMapping("/profile/changePassword")
     public String postUpdateProfile(@Valid ChangePassword changePassword,
                                     BindingResult bindingResult, RedirectAttributes redirectAttributes){
+
+
 
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("changePassword", changePassword);
@@ -78,10 +82,15 @@ public class UserController {
 
         return "redirect:/users/profile/changePassword";
         }
-        Users loggedUser = this.userService.getAuthenticatedUser();
-        this.userService.changePassword(changePassword, loggedUser);
 
-        return "redirect:/users/profile";
+        try {
+            this.userService.changePassword(changePassword);
+            return "redirect:/users/profile";
+        }catch (RuntimeException message){
+            redirectAttributes.addFlashAttribute("changePassword", changePassword);
+            redirectAttributes.addFlashAttribute("invalidPassword", true);
+            return "redirect:/users/profile/changePassword";
+        }
     }
 }
 

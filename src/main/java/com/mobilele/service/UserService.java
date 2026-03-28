@@ -15,5 +15,5 @@ public interface UserService {
     void deleteUserWithId(Long id);
     Users getAuthenticatedUser();
     Users getUserById(Long id);
-    void changePassword(ChangePassword changePasswordDto, Users loggedUser);
+    void changePassword(ChangePassword changePasswordDto);
 }

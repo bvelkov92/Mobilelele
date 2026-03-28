@@ -13,8 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void userRegister(UserRegister userRegisterDto){
+    public void userRegister(UserRegister userRegisterDto) {
         this.roleService.addAllRoleEnumsInRepository();
         Users newUser = new Users();
         newUser.setUsername(userRegisterDto.getUsername());
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<ViewAllUsersDto> getAllUsers() {
-       return userRepository.findAll()
+        return userRepository.findAll()
                 .stream()
                 .map(user -> modelMapper.map(user, ViewAllUsersDto.class))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -59,15 +59,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public Long getAuthenticatedUserId() throws NullPointerException {
-        Authentication getLoggedUser = SecurityContextHolder.getContext().getAuthentication();
-        Long loggedUserId = this.userRepository.findUserByEmail(getLoggedUser.getName()).orElseThrow(NullPointerException::new).getId();
 
-        if(loggedUserId!=null){
-      return loggedUserId;
-      }else {
+        Authentication getLoggedUser = SecurityContextHolder.getContext().getAuthentication();
+
+
+        if (getLoggedUser != null) {
+            return this.userRepository.findUserByEmail(getLoggedUser.getName())
+                    .orElseThrow(NullPointerException::new).getId();
+        } else {
             throw new NullPointerException("Not logged user!");
         }
     }
+
 
     @Override
     public void deleteUserWithId(Long id) {
@@ -79,11 +82,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users getAuthenticatedUser() {
         Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authenticatedUser!=null){
         String email = authenticatedUser.getName().trim();
         Long id = this.userRepository.findUserByEmail(email).orElseThrow(()->
                         new NullPointerException("There is not logged user!"))
                                                         .getId();
         return this.userRepository.findById(id).orElseThrow(() -> new NullPointerException("Not found user"));
+    }else {
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -92,9 +100,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(ChangePassword changePasswordDto,Users loggedUser) {
-        this.userRepository.findUserByEmail(loggedUser.getEmail())
-                .ifPresent(user -> user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword())));
+    public void changePassword(ChangePassword changePasswordDto) {
+        Authentication logged = SecurityContextHolder.getContext().getAuthentication();
+
+        if (logged != null) {
+            String loggedUser = logged.getName();
+            Users foundUser = this.userRepository.findUserByEmail(loggedUser).orElse(null);
+
+            if (foundUser == null || !passwordEncoder.matches( changePasswordDto.getPassword(),foundUser.getPassword())) {
+                throw new RuntimeException();
+            } else {
+                foundUser.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+                this.userRepository.saveAndFlush(foundUser);
+            }
+        } else {
+            throw new RuntimeException();
+        }
     }
 }
 
