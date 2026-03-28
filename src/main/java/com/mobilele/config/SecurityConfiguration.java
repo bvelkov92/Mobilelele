@@ -21,10 +21,10 @@ public class SecurityConfiguration {
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
+                        .requestMatchers("/users/profile","/users/profile/changePassword", "/users/profile/editProfile").authenticated()
                         .requestMatchers("/offers/add", "/offers/all").authenticated()
-                        .requestMatchers("/brands/add","/administration", "/administration/brandAndModels", "/administration/users").hasRole("ADMIN")
+                        .requestMatchers("/administration", "/administration/brandAndModels", "/administration/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
-
         ).formLogin(
                 formLogin -> formLogin.loginPage("/users/login")
                         .usernameParameter("email")

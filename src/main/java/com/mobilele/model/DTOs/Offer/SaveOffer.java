@@ -44,7 +44,6 @@ public class SaveOffer {
     @NotBlank
     private String description;
 
-    @NotBlank
     private String imageUrl;
 
 }

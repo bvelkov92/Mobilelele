@@ -15,8 +15,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -39,7 +47,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void saveOffer(SaveOffer saveOffer) {
+    public void saveOffer(SaveOffer saveOffer, MultipartFile file) {
         Offers offer = new Offers();
         Models model = this.modelRepository.findById(saveOffer.getModelId()).get();
 
@@ -50,16 +58,25 @@ public class OfferServiceImpl implements OfferService {
         offer.setModel(model);
         offer.setTransmission(saveOffer.getTransmissionType());
         offer.setYear(saveOffer.getYear());
-        offer.setImageUrl(saveOffer.getImageUrl());
+//==================== IMAGE UPLOAD ==========================
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path path = Paths.get("uploads/" + fileName);
+        try {
+            Files.createDirectories(path.getParent());
+            Files.write(path, file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException("File upload failed");
+        }
+        offer.setImageUrl(fileName);
+        //================= SELLER SET =================
+
         if (getLoggedUser()!=null){
             Users user = getLoggedUser();
         offer.setSeller(user);
         }else {
             throw new NullPointerException("Not logged user!");
         }
-
         this.offerRepository.saveAndFlush(offer);
-
     }
 
     @Override
@@ -94,12 +111,25 @@ public class OfferServiceImpl implements OfferService {
         throw new NullPointerException();
         }
 
+    @Transactional
     @Override
-    public void updateOffer(UpdateOffer updatedValues, Long id) {
+    public void updateOffer(UpdateOffer updatedValues, Long id, MultipartFile file) {
         Offers currentOffer = this.offerRepository.findById(id).orElseThrow();
-        Models model = this.modelRepository.findById(id).orElseThrow();
+        Models model = this.modelRepository.findById(updatedValues.getModelId()).orElseThrow();
         modelMapper.map(updatedValues, currentOffer);
         currentOffer.setModel(model);
+
+        String imageName = UUID.randomUUID()+"_" +file.getOriginalFilename();
+        Path path = Paths.get("uploads/" + imageName);
+
+        try {
+            Files.createDirectories(path.getParent());
+            Files.write(path, file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException("File upload failed");
+        }
+        currentOffer.setImageUrl(imageName);
+
         this.offerRepository.saveAndFlush(currentOffer);
     }
 

@@ -44,7 +44,6 @@ public class UpdateOffer {
     @NotBlank
     private String description;
 
-    @NotBlank
     private String imageUrl;
 
 }

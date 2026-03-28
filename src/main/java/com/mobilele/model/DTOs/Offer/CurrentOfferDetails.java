@@ -42,6 +42,5 @@ public class CurrentOfferDetails {
     @NotBlank
     private String user;
 
-    @NotBlank
     private String imageUrl;
 }
