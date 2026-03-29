@@ -1,5 +1,7 @@
 package com.mobilele.model.DTOs.Offer;
 
+import com.mobilele.model.entity.Brands;
+import com.mobilele.model.entity.Models;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,4 +45,7 @@ public class CurrentOfferDetails {
     private String user;
 
     private String imageUrl;
+
+    private Brands brand;
+    private Models model;
 }

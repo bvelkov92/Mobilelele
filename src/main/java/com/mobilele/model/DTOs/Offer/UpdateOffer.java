@@ -1,5 +1,6 @@
 package com.mobilele.model.DTOs.Offer;
 
+import com.mobilele.model.entity.Brands;
 import com.mobilele.model.enums.EngineTypeEnum;
 import com.mobilele.model.enums.TransmissionTypeEnum;
 import com.mobilele.model.enums.TypeOfVehicleEnums;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.servlet.tags.form.SelectTag;
 
 import java.math.BigDecimal;
 
@@ -45,5 +48,8 @@ public class UpdateOffer {
     private String description;
 
     private String imageUrl;
+
+//    @Query("SELECT DISTINCT name FROM Brands name ")
+    private Brands brand;
 
 }

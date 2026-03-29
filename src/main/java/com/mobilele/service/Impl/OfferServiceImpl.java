@@ -4,6 +4,7 @@ import com.mobilele.model.DTOs.Offer.SaveOffer;
 import com.mobilele.model.DTOs.Offer.CurrentOfferDetails;
 import com.mobilele.model.DTOs.Offer.GetAllOffers;
 import com.mobilele.model.DTOs.Offer.UpdateOffer;
+import com.mobilele.model.entity.Brands;
 import com.mobilele.model.entity.Models;
 import com.mobilele.model.entity.Offers;
 import com.mobilele.model.entity.Users;
@@ -101,10 +102,11 @@ public class OfferServiceImpl implements OfferService {
     public CurrentOfferDetails getDetails(Long id) {
         Offers offer = this.offerRepository.findById(id).orElse(null);
         if (offer != null) {
+            Brands brand = offer.getModel().getBrand();
             String user = offer.getSeller().getUsername();
             CurrentOfferDetails mappedOffer = this.modelMapper.map(offer, CurrentOfferDetails.class);
             mappedOffer.setUser(user);
-
+            mappedOffer.setBrand(brand);
             return mappedOffer;
         }
         throw new NullPointerException();
