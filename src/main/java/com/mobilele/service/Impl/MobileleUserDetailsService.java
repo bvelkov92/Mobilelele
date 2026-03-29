@@ -17,16 +17,16 @@ public class MobileleUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userRepository.findUserByEmail(email)
+        return userRepository.findUserByUsername(username)
                 .map(this::map)
-                .orElseThrow(()-> new UsernameNotFoundException("User " + email +" not found!"));
+                .orElseThrow(()-> new UsernameNotFoundException("User " + username +" not found!"));
     }
 
     private UserDetails map(Users user){
       return   org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
                 .authorities(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName()))
                 .build();

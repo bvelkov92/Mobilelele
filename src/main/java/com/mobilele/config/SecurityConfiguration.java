@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -27,7 +25,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
         ).formLogin(
                 formLogin -> formLogin.loginPage("/users/login")
-                        .usernameParameter("email")
+                        .usernameParameter("username")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/users/login?error")
@@ -43,10 +41,5 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository){
         return  new MobileleUserDetailsService(userRepository);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }

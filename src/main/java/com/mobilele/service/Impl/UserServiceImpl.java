@@ -101,26 +101,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateProfile(EditProfile editProfile, MultipartFile file) {
         Users loggedUser = getLoggedUser();
-        Users user = this.userRepository.findUserByEmail(loggedUser.getEmail()).orElseThrow();
+        Users user = this.userRepository.findUserByUsername(loggedUser.getUsername()).orElseThrow();
                 user.setFirstName(editProfile.getFirstName());
                 user.setLastName(editProfile.getLastName());
                 user.setAge(editProfile.getAge());
-                user.setUsername(editProfile.getUsername());
+                user.setEmail(editProfile.getEmail());
 
+                if (file!=null && !file.isEmpty()) {
+                    String profileImg = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                    Path path = Paths.get("uploads/" + profileImg);
+                    try {
+                        Files.createDirectories(path.getParent());
+                        Files.copy(file.getInputStream(), path);
+                        user.setImageUrl(profileImg);
 
-                String profileImg = UUID.randomUUID()+"_" +file.getOriginalFilename();
-                Path path = Paths.get("uploads/" + profileImg);
-
-                try {
-                    Files.createDirectories(path.getParent());
-                    Files.copy(file.getInputStream(), path);
-                    user.setImageUrl(profileImg);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                this.userRepository.save(user);
-
+        this.userRepository.save(user);
     }
 
     @Override
@@ -135,7 +134,7 @@ public class UserServiceImpl implements UserService {
 
     public Users getLoggedUser(){
         Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
-        return this.userRepository.findUserByEmail(loggedUser.getName()).orElse(null);
+        return this.userRepository.findUserByUsername(loggedUser.getName()).orElse(null);
     }
 }
 

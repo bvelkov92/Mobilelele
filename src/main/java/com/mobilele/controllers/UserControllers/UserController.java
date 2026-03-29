@@ -60,21 +60,14 @@ public class UserController {
                                     RedirectAttributes redirectAttributes,
                                     @RequestParam ("profileImg") MultipartFile file){
 
-        EditProfile user = this.userService.getEditProfileDto();
-        editProfileDto.setRole(user.getRole());
-        editProfileDto.setEmail(user.getEmail());
+        //EditProfile user = this.userService.getEditProfileDto();
+
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("editProfile",editProfileDto );
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfile", bindingResult);
             return "redirect:/users/profile/editProfile";
         }
-
-
-        if (file.isEmpty()){
-            redirectAttributes.addFlashAttribute("editProfile", editProfileDto);
             redirectAttributes.addFlashAttribute("profileImg", true);
-            return "redirect:/users/profile/editProfile";
-        }
 
         this.userService.updateProfile(editProfileDto, file);
 

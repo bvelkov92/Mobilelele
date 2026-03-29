@@ -1,7 +1,7 @@
 package com.mobilele.model.DTOs.User;
 
 import com.mobilele.model.entity.Roles;
-import com.mobilele.utils.anotations.IsExistUsernameValidation;
+import com.mobilele.utils.anotations.IsExistEmailValidation;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -11,9 +11,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@IsExistEmailValidation
 public class EditProfile {
 
-    @IsExistUsernameValidation
+
     private String username;
 
     private String email;
@@ -23,7 +24,7 @@ public class EditProfile {
     @Size(min = 2)
     private String lastName;
 
-    @Min(6)
+    @Min(10)
     private Integer age;
 
     private Roles role;

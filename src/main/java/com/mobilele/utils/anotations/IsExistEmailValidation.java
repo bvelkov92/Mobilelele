@@ -1,7 +1,7 @@
 package com.mobilele.utils.anotations;
 
 
-import com.mobilele.utils.validators.IsExistUsernameValidator;
+import com.mobilele.utils.validators.IsExistEmailValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -9,12 +9,12 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target(ElementType.FIELD)
-@Constraint(validatedBy = IsExistUsernameValidator.class)
+@Target(ElementType.TYPE)
+@Constraint(validatedBy = IsExistEmailValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IsExistUsernameValidation {
+public @interface IsExistEmailValidation {
 
-     String message() default "This username exist!";
+     String message() default "This email exist!";
 
      Class<?>[] groups() default {};
 

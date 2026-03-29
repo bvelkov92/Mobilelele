@@ -23,17 +23,8 @@
 
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="username">Username</label>
-                <input id="username"
-                       type="text"
-                       th:field = "*{username}"
-                       th:errorclass="is-invalid"
-                       class="form-control"
-                placeholder="Username">
-                <p th:if="${#fields.hasErrors('username')}"
-                   th:errors="*{username}"
-                   class="invalid-feedback errors alert alert-danger">
-                    Username exist!
-                </p>
+                <input type="hidden" th:field="*{username}">
+                <p th:text="*{username}" id="username" class="form-control"></p>
             </div>
 
             <div class="form-group col-md-6 mb-3">
@@ -76,11 +67,22 @@
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="email" class="text-white font-weight-bold">Email</label>
-                <p th:text="*{email}" id="email" class="form-control"></p>
+                <input id="email"
+                       type="text"
+                       th:field = "*{email}"
+                       th:errorclass="is-invalid"
+                       class="form-control"
+                       placeholder="Email">
+                <p th:if="${#fields.hasErrors('email')}"
+                   th:errors="*{email}"
+                   class="invalid-feedback errors alert alert-danger">
+                    Email exist!
+                </p>
             </div>
 
             <div class="form-group col-md-6 mb-3">
                 <label for="role" class="text-white font-weight-bold">Role</label>
+                <input type="hidden" th:field="*{role.roleName}">
                <p th:text="*{role.roleName}" id="role" class="form-control"></p>
             </div>
         </div>
