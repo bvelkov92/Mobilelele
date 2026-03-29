@@ -1,6 +1,7 @@
 package com.mobilele.service.Impl;
 
 import com.mobilele.model.DTOs.User.ChangePassword;
+import com.mobilele.model.DTOs.User.EditProfile;
 import com.mobilele.model.DTOs.User.UserRegister;
 import com.mobilele.model.DTOs.User.ViewAllUsersDto;
 import com.mobilele.model.entity.Users;
@@ -13,9 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,11 +66,8 @@ public class UserServiceImpl implements UserService {
 
     public Long getAuthenticatedUserId() throws NullPointerException {
 
-        Authentication getLoggedUser = SecurityContextHolder.getContext().getAuthentication();
-
-
-        if (getLoggedUser != null) {
-            return this.userRepository.findUserByEmail(getLoggedUser.getName())
+        if (getLoggedUser() != null) {
+            return this.userRepository.findUserByEmail(getLoggedUser().getEmail())
                     .orElseThrow(NullPointerException::new).getId();
         } else {
             throw new NullPointerException("Not logged user!");
@@ -80,42 +83,59 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users getAuthenticatedUser() {
-        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authenticatedUser!=null){
-        String email = authenticatedUser.getName().trim();
-        Long id = this.userRepository.findUserByEmail(email).orElseThrow(()->
-                        new NullPointerException("There is not logged user!"))
-                                                        .getId();
-        return this.userRepository.findById(id).orElseThrow(() -> new NullPointerException("Not found user"));
-    }else {
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
     public Users getUserById(Long id) {
         return this.userRepository.findById(id).orElse(null);
     }
 
     @Override
     public void changePassword(ChangePassword changePasswordDto) {
-        Authentication logged = SecurityContextHolder.getContext().getAuthentication();
-
-        if (logged != null) {
-            String loggedUser = logged.getName();
-            Users foundUser = this.userRepository.findUserByEmail(loggedUser).orElse(null);
-
-            if (foundUser == null || !passwordEncoder.matches( changePasswordDto.getPassword(),foundUser.getPassword())) {
+        Users foundUser = getLoggedUser();
+        if (foundUser == null || !passwordEncoder.matches(changePasswordDto.getPassword(),foundUser.getPassword())) {
                 throw new RuntimeException();
             } else {
                 foundUser.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
                 this.userRepository.saveAndFlush(foundUser);
             }
-        } else {
-            throw new RuntimeException();
-        }
+    }
+
+    @Override
+    public void updateProfile(EditProfile editProfile, MultipartFile file) {
+        Users loggedUser = getLoggedUser();
+        Users user = this.userRepository.findUserByEmail(loggedUser.getEmail()).orElseThrow();
+                user.setFirstName(editProfile.getFirstName());
+                user.setLastName(editProfile.getLastName());
+                user.setAge(editProfile.getAge());
+                user.setUsername(editProfile.getUsername());
+
+
+                String profileImg = UUID.randomUUID()+"_" +file.getOriginalFilename();
+                Path path = Paths.get("uploads/" + profileImg);
+
+                try {
+                    Files.createDirectories(path.getParent());
+                    Files.copy(file.getInputStream(), path);
+                    user.setImageUrl(profileImg);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                this.userRepository.save(user);
+
+    }
+
+    @Override
+    public EditProfile getEditProfileDto() {
+        Users loggedUser = getLoggedUser();
+        EditProfile editProfile = modelMapper.map(loggedUser, EditProfile.class);
+        editProfile.setRole(loggedUser.getRole());
+        editProfile.setUsername(loggedUser.getUsername());
+        return editProfile;
+    }
+
+
+    public Users getLoggedUser(){
+        Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
+        return this.userRepository.findUserByEmail(loggedUser.getName()).orElse(null);
     }
 }
 

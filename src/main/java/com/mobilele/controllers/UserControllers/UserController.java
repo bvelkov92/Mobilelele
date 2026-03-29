@@ -3,7 +3,6 @@ package com.mobilele.controllers.UserControllers;
 import com.mobilele.model.DTOs.User.ChangePassword;
 import com.mobilele.model.DTOs.User.EditProfile;
 import com.mobilele.model.DTOs.User.UserLogin;
-import com.mobilele.model.entity.Users;
 import com.mobilele.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -37,8 +38,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getMyProfile(Model model){
-        Users users = this.userService.getAuthenticatedUser();
-        model.addAttribute("profile", users);
+        model.addAttribute("profile", this.userService.getLoggedUser());
         return "person-profile";
     }
 
@@ -46,19 +46,39 @@ public class UserController {
     @GetMapping("/profile/editProfile")
     public String getUpdateProfile(Model model){
         if (!model.containsAttribute("editProfile")){
-            model.addAttribute("editProfile", new EditProfile());
+            model.addAttribute("editProfile", this.userService.getEditProfileDto());
         }
 
-        //TODO:
-        return  null;
+        return  "edit-profile";
     }
 
 
     @PostMapping("/profile/editProfile")
-    public String postUpdateProfile(){
+    @Transactional
+    public String postUpdateProfile(@Valid EditProfile editProfileDto,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes,
+                                    @RequestParam ("profileImg") MultipartFile file){
 
-        //TODO:
-        return null;
+        EditProfile user = this.userService.getEditProfileDto();
+        editProfileDto.setRole(user.getRole());
+        editProfileDto.setEmail(user.getEmail());
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("editProfile",editProfileDto );
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editProfile", bindingResult);
+            return "redirect:/users/profile/editProfile";
+        }
+
+
+        if (file.isEmpty()){
+            redirectAttributes.addFlashAttribute("editProfile", editProfileDto);
+            redirectAttributes.addFlashAttribute("profileImg", true);
+            return "redirect:/users/profile/editProfile";
+        }
+
+        this.userService.updateProfile(editProfileDto, file);
+
+        return "redirect:/users/profile";
     }
 
     @GetMapping("/profile/changePassword")

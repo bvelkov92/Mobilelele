@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+    <title></title>
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+
+<div class="container">
+    <h2 class="text-center text-white">My Profile</h2>
+    <form th:method="post"
+          th:object = "${editProfile}"
+          th:action = "@{/users/profile/editProfile}"
+          enctype="multipart/form-data"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="username">Username</label>
+                <input id="username"
+                       type="text"
+                       th:field = "*{username}"
+                       th:errorclass="is-invalid"
+                       class="form-control"
+                placeholder="Username">
+                <p th:if="${#fields.hasErrors('username')}"
+                   th:errors="*{username}"
+                   class="invalid-feedback errors alert alert-danger">
+                    Username exist!
+                </p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="firstName">First Name</label>
+                <input id="firstName"
+                       type="text"
+                        th:field = "*{firstName}"
+                        th:errorclass="is-invalid"
+                        class="form-control"
+                placeholder="First name">
+                <p class="invalid-feedback errors alert alert-danger">
+                    First name must be between 2 and 10 symbols.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="lastName" class="text-white font-weight-bold">Last Name</label>
+                <input  id="lastName" type="text"
+                        th:field="*{lastName}"
+                        th:errorclass="is-invalid"
+                        class="form-control"
+                       placeholder="Last name"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    First name must be between 2 and 10 symbols.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="age">Age</label>
+                <input id="age" class="form-control"
+                th:field="*{age}"
+                th:errorclass="is-invalid"
+                placeholder="Age">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Age must be bigger than 10!
+                </p>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="email" class="text-white font-weight-bold">Email</label>
+                <p th:text="*{email}" id="email" class="form-control"></p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label for="role" class="text-white font-weight-bold">Role</label>
+               <p th:text="*{role.roleName}" id="role" class="form-control"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="text-white font-weight-bold">Upload Image</label>
+            <input type="file"
+                   name="profileImg"
+                   accept="image/*"
+                   class="form-control"/>
+
+            <p th:if="${profileImg}"
+               class="invalid-feedback d-block">
+                Empty field!
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Update Offer"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+		<footer> </footer>
+</div>
+
+</body>
+</html>
